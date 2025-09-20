@@ -36,10 +36,9 @@
 
 ## Member 3  
 **Name:**  
-[Your full name]
+Saidul Hossain Al Amin 
 
 **Project Title:**  
-[Short and clear headline for the idea]
 
 **Concept Overview:**  
 [A concise description of the project — what it is, its purpose, and the methodology/approach you plan to use]
