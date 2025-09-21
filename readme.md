@@ -56,21 +56,21 @@ Session 1 and 2
 
 ---
 
-## Member 4  
+## Member 4
 **Name:**  
-[Your full name]
+**Nafia Wahid Nirjhor** (Team Name: R3NS)
 
 **Project Title:**  
-[Short and clear headline for the idea]
+**Tracing Star Formation Histories with JWST & Bagpipes**
 
 **Concept Overview:**  
-[A concise description of the project — what it is, its purpose, and the methodology/approach you plan to use]
+By using **JWST NIRSpec data**, we can analyze spectra of galaxies and fit them with **Bagpipes** to measure **star-formation rates, stellar masses, metallicities, and ages**. This will allow us to **reconstruct how galaxies formed and evolved their stars over time** and examine how environment affects star formation.
 
 **Inspired By Session(s):**  
-[List of CAM-SUST2025 session(s) that motivated or influenced your idea]
+**Session 2** and **Session 3** (JWST NIRSpec & Bagpipes)
 
 **Reference (Optional):**  
-[Links or brief notes on similar projects, research, or relevant work]
+**[Relevant works using JWST NIRSpec and Bagpipes for galaxy star-formation histories]**
 
 ---
 
