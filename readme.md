@@ -18,19 +18,23 @@ N/A, probably a noble work
 
 ## Member 2  
 **Name:**  
-[Your full name]
+Nishat Nabilah Ahmed
 
 **Project Title:**  
-[Short and clear headline for the idea]
+SEDs of Cluster Galaxies: Environmental Quenching
 
 **Concept Overview:**  
-[A concise description of the project — what it is, its purpose, and the methodology/approach you plan to use]
+This project examines how cluster galaxies differ from field galaxies in stellar mass, star-formation rate, age, and dust content. Cluster membership will be determined using redshift and positional data and Bagpipes SED fitting will be applied to photometry. The results will test whether dense environments accelerate quenching compared to the field ones.
+
+Timeframe: ~2-3 weeks
+Possible Paper Angle: “Star-formation suppression in cluster environments at intermediate redshifts”
 
 **Inspired By Session(s):**  
-[List of CAM-SUST2025 session(s) that motivated or influenced your idea]
+galaxy_clusters_workshop_notebook_Participants.ipynb
+Galaxy SEDs Fitting.ipynb
 
 **Reference (Optional):**  
-[Links or brief notes on similar projects, research, or relevant work]
+Peng et al. (2010) Mass and Environment as Drivers of Galaxy Evolution, ApJ, 721, 193, Mao et al. (2022), Wang et al. (2022), Gully et al. (2025), Roberts et al. (2025).
 
 ---
 
