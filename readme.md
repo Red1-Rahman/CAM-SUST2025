@@ -43,6 +43,7 @@ Saidul Hossain Al Amin
 
 Project Title:
 From a baby universe to Galactic Ocean 
+
 **Concept Overview:**  
 by using 21 cm cosmology we could model the early universe , then from that early universe how galaxys are formed who could describe by galaxy's morphology and very lasy by using Begpipes could show some galaxy related SED
 
