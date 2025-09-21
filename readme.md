@@ -38,13 +38,13 @@ N/A, probably a noble work
 **Name:**  
 Saidul Hossain Al Amin 
 
-**Project Title:**  
-
+Project Title:
+From a baby universe to Galactic Ocean 
 **Concept Overview:**  
-[A concise description of the project — what it is, its purpose, and the methodology/approach you plan to use]
+by using 21 cm cosmology we could model the early universe , then from that early universe how galaxys are formed who could describe by galaxy's morphology and very lasy by using Begpipes could show some galaxy related SED
 
 **Inspired By Session(s):**  
-[List of CAM-SUST2025 session(s) that motivated or influenced your idea]
+Session 1 and 2 
 
 **Reference (Optional):**  
 [Links or brief notes on similar projects, research, or relevant work]
