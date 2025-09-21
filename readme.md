@@ -30,8 +30,7 @@ Timeframe: ~2-3 weeks
 Possible Paper Angle: “Star-formation suppression in cluster environments at intermediate redshifts”
 
 **Inspired By Session(s):**  
-galaxy_clusters_workshop_notebook_Participants.ipynb
-Galaxy SEDs Fitting.ipynb
+Session 2 and Session 4 (Galaxy SEDs Fitting.ipynb, galaxy_clusters_workshop_notebook_Participants.ipynb)
 
 **Reference (Optional):**  
 Peng et al. (2010) Mass and Environment as Drivers of Galaxy Evolution, ApJ, 721, 193, Mao et al. (2022), Wang et al. (2022), Gully et al. (2025), Roberts et al. (2025).
