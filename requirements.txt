@@ -6,6 +6,7 @@ numpy>=1.24.0
 pandas>=2.0.0
 matplotlib>=3.7.0
 scipy>=1.10.0
+seaborn>=0.12.0
 
 # Astronomical libraries
 astropy>=5.3.0
@@ -14,10 +15,14 @@ h5py>=3.8.0
 # AI and machine learning
 openai>=0.27.0
 
-# Optional astronomical packages (install separately if needed)
-# py21cmfast  # For 21cm simulations - requires conda/pip install
-# bagpipes    # For SED fitting - requires pip install
-# jwst        # For JWST pipeline - requires pip install jwst
+# Specialized astronomical packages
+bagpipes>=1.0.0
+# jwst>=1.12.0  # Requires Visual C++ Build Tools on Windows
+
+# Advanced cosmological simulation packages (optional - may require conda)
+# py21cmfast  # For 21cm simulations - complex installation, use conda
+# tools21cm   # Tools for 21cm analysis
+# nautilus-sampler  # Nested sampling algorithm
 
 # Development and testing
 pytest>=7.0.0
