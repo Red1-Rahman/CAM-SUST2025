@@ -12,7 +12,9 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 from scipy.ndimage import gaussian_filter1d
 import warnings
+import logging
 warnings.filterwarnings("ignore")
+logger = logging.getLogger(__name__)
 
 try:
     from astropy.io import fits
@@ -21,22 +23,22 @@ try:
     HAVE_ASTROPY = True
 except ImportError:
     HAVE_ASTROPY = False
-    print("Warning: astropy not available.")
+    logger.warning("astropy not available. Some functionality disabled.")
 
 try:
     import bagpipes as pipes
     HAVE_BAGPIPES = True
 except ImportError:
     HAVE_BAGPIPES = False
-    print("Warning: bagpipes not available. Using simulation mode.")
+    logger.warning("bagpipes not available. Using simulation mode.")
 
 try:
-    from jwst.datamodels import ImageModel
-    from jwst import datamodels
+    from jwst.datamodels import ImageModel  # type: ignore
+    from jwst import datamodels  # type: ignore
     HAVE_JWST_PIPELINE = True
 except ImportError:
     HAVE_JWST_PIPELINE = False
-    print("Warning: JWST pipeline not available. Using simulation mode.")
+    logger.warning("JWST pipeline not available. Using simulation mode.")
 
 class JWSTAnalyzer:
     """

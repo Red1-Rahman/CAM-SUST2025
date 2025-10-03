@@ -11,6 +11,8 @@
 # - Spectral fitting with NGSF (sf_class.py, SF_functions.py)
 
 import streamlit as st
+import logging
+from utils.feature_flags import summarize_status, detect_capabilities, all_required_or_raise
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -27,7 +29,16 @@ from utils.data_handler import DataHandler
 from utils.cosmology_utils import CosmologyUtils
 from utils.plotting_utils import PlottingUtils
 
+def _configure_logging():
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+    )
+    logging.getLogger("matplotlib").setLevel(logging.WARNING)
+
+
 def main():
+    _configure_logging()
     st.set_page_config(
         page_title="Astro-AI: Galaxy Evolution Analysis Platform",
         page_icon="🌌",
@@ -70,6 +81,22 @@ def main():
     # Sidebar navigation
     st.sidebar.title("🚀 Navigation")
     st.sidebar.markdown("---")
+
+    with st.sidebar.expander("Environment Status", expanded=False):
+        st.markdown(summarize_status())
+        strict = st.checkbox("Strict mode (require all heavy deps)", value=False, help="Fail if optional scientific dependencies are missing.")
+        if strict:
+            try:
+                # Define which capabilities are truly required in strict deployment
+                all_required_or_raise(["py21cmfast", "bagpipes", "jwst_pipeline", "astropy"])  # adjust as needed
+                st.success("All required capabilities present.")
+            except Exception as e:
+                st.error(str(e))
+        else:
+            caps = detect_capabilities()
+            missing = [k for k, v in caps.items() if not v.available]
+            if missing:
+                st.caption("Missing optional modules: " + ", ".join(missing))
     
     module = st.sidebar.selectbox(
         "Select Analysis Module:",

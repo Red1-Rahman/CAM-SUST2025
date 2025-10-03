@@ -1,12 +1,42 @@
-# OpenAI Integration for Astro-AI
-# 
-# This module provides AI-powered scientific insights and report generation
-# for astronomical analysis results
+"""OpenAI Integration for Astro-AI
 
-import openai
-import streamlit as st
+Modernized for openai>=1.0.0.
+
+Key points:
+1. Uses the new `OpenAI` client (Responses API optional) while retaining a legacy fallback
+2. Removes hard-coded API key. Provide credentials via:
+   - Explicit constructor arg `api_key`
+   - Streamlit `st.secrets['OPENAI_API_KEY']`
+   - Environment variable `OPENAI_API_KEY`
+3. Unified private helper `_chat` abstracts differences between SDK versions
+4. Optional streaming via `stream_chat` when using the new SDK's chat.completions
+5. Toggle Responses API usage with `use_responses_api=True` (experimental for richer multimodal inputs)
+
+Environment setup:
+    set OPENAI_API_KEY=sk-...   (Windows PowerShell)
+
+Example:
+    assistant = OpenAIAssistant(model="gpt-4o")
+    insight = assistant.generate_insight({"stat":"value"}, analysis_type="cosmic_evolution")
+    for token in assistant.stream_chat([...]):
+        print(token, end="")
+
+Security: ensure you NEVER commit real API keys to source control.
+"""
+
+import os
 import json
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Union
+
+import streamlit as st
+
+try:
+    # New >=1.0 SDK style
+    from openai import OpenAI, AsyncOpenAI, APIError
+    _NEW_OPENAI_SDK = True
+except Exception:  # pragma: no cover - fallback if old package version
+    import openai  # type: ignore
+    _NEW_OPENAI_SDK = False
 
 class OpenAIAssistant:
     """
@@ -16,7 +46,7 @@ class OpenAIAssistant:
     automated report generation for galaxy evolution studies.
     """
     
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key: Optional[str] = None, model: str = "gpt-4o", use_responses_api: bool = False):
         """
         Initialize OpenAI assistant with API key.
         
@@ -26,16 +56,28 @@ class OpenAIAssistant:
             OpenAI API key. If not provided, will look for it in environment
             or Streamlit secrets.
         """
+        # API key sourcing hierarchy (no hard-coded secrets):
+        # 1. explicit parameter, 2. Streamlit secrets, 3. env var OPENAI_API_KEY
         if api_key:
             self.api_key = api_key
-        elif 'OPENAI_API_KEY' in st.secrets:
-            self.api_key = st.secrets['OPENAI_API_KEY']
+        elif 'OPENAI_API_KEY' in st.secrets:  # type: ignore[attr-defined]
+            self.api_key = st.secrets['OPENAI_API_KEY']  # type: ignore[index]
         else:
-            # Use the provided API key
-            self.api_key = "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"
-        
-        # Initialize OpenAI client
-        openai.api_key = self.api_key
+            self.api_key = os.getenv('OPENAI_API_KEY', '')
+
+        if not self.api_key:
+            raise ValueError("OpenAI API key not found. Set OPENAI_API_KEY env var or Streamlit secret.")
+
+        self.model = model
+        self.use_responses_api = use_responses_api
+
+        if _NEW_OPENAI_SDK:
+            # Instantiate reusable client
+            self.client = OpenAI(api_key=self.api_key)
+        else:  # legacy fallback
+            import openai  # type: ignore
+            openai.api_key = self.api_key
+            self.client = openai  # type: ignore
         
         # System prompt for astronomical context
         self.system_prompt = """
@@ -120,17 +162,14 @@ class OpenAIAssistant:
                 """
             
             # Generate response using OpenAI
-            response = openai.ChatCompletion.create(
-                model="gpt-4",
+            return self._chat(
                 messages=[
                     {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": context}
+                    {"role": "user", "content": context},
                 ],
                 max_tokens=1500,
-                temperature=0.7
+                temperature=0.7,
             )
-            
-            return response.choices[0].message.content
             
         except Exception as e:
             return f"AI analysis temporarily unavailable: {str(e)}"
@@ -167,17 +206,14 @@ class OpenAIAssistant:
             Structure as a scientific synthesis suitable for a research summary.
             """
             
-            response = openai.ChatCompletion.create(
-                model="gpt-4",
+            return self._chat(
                 messages=[
                     {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": context}
+                    {"role": "user", "content": context},
                 ],
                 max_tokens=2000,
-                temperature=0.7
+                temperature=0.7,
             )
-            
-            return response.choices[0].message.content
             
         except Exception as e:
             return f"Comparative analysis temporarily unavailable: {str(e)}"
@@ -235,17 +271,14 @@ class OpenAIAssistant:
             else:
                 prompt = f"Generate {section_type} content for: {json.dumps(data, indent=2)}"
             
-            response = openai.ChatCompletion.create(
-                model="gpt-4",
+            return self._chat(
                 messages=[
                     {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": prompt}
+                    {"role": "user", "content": prompt},
                 ],
                 max_tokens=1000,
-                temperature=0.7
+                temperature=0.7,
             )
-            
-            return response.choices[0].message.content
             
         except Exception as e:
             return f"Report section generation temporarily unavailable: {str(e)}"
@@ -273,18 +306,16 @@ class OpenAIAssistant:
             Format as a numbered list.
             """
             
-            response = openai.ChatCompletion.create(
-                model="gpt-4",
+            content = self._chat(
                 messages=[
                     {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": context}
+                    {"role": "user", "content": context},
                 ],
                 max_tokens=800,
-                temperature=0.8
+                temperature=0.8,
             )
-            
-            # Parse response into list
-            suggestions = response.choices[0].message.content.split('\n')
+
+            suggestions = content.split('\n')
             suggestions = [s.strip() for s in suggestions if s.strip() and 
                           (s.strip()[0].isdigit() or s.strip().startswith('-'))]
             
@@ -303,11 +334,107 @@ class OpenAIAssistant:
             True if API is working, False otherwise
         """
         try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": "Test"}],
-                max_tokens=5
+            _ = self._chat(
+                messages=[{"role": "user", "content": "Ping"}],
+                max_tokens=5,
+                temperature=0.0,
             )
             return True
-        except:
+        except Exception:
             return False
+
+    # ------------------------- Internal Helpers ------------------------- #
+    def _chat(
+        self,
+        messages: List[Dict[str, str]],
+        max_tokens: int = 512,
+        temperature: float = 0.7,
+    ) -> str:
+        """Unified chat abstraction supporting both new and legacy SDKs.
+
+        Parameters
+        ----------
+        messages : list
+            List of role/content dicts.
+        max_tokens : int
+            Completion max tokens.
+        temperature : float
+            Sampling temperature.
+        """
+        if _NEW_OPENAI_SDK:
+            try:
+                if self.use_responses_api:
+                    # Convert messages into Responses API input format
+                    # First system prompt (if present) becomes instructions
+                    instructions = None
+                    user_inputs: List[Dict[str, Union[str, list]]] = []
+                    for m in messages:
+                        if m["role"] == "system" and instructions is None:
+                            instructions = m["content"]
+                        else:
+                            user_inputs.append(
+                                {
+                                    "role": m["role"],
+                                    "content": [
+                                        {"type": "input_text", "text": m["content"]}
+                                    ],
+                                }
+                            )
+                    resp = self.client.responses.create(
+                        model=self.model,
+                        instructions=instructions,
+                        input=user_inputs,
+                        max_output_tokens=max_tokens,
+                        temperature=temperature,
+                    )
+                    return getattr(resp, "output_text", "").strip()
+                else:
+                    completion = self.client.chat.completions.create(
+                        model=self.model,
+                        messages=messages,
+                        max_tokens=max_tokens,
+                        temperature=temperature,
+                    )
+                    return completion.choices[0].message.content  # type: ignore
+            except APIError as e:  # type: ignore[name-defined]
+                raise RuntimeError(f"OpenAI API error: {e}") from e
+            except Exception as e:  # pragma: no cover
+                raise RuntimeError(f"OpenAI request failed: {e}") from e
+        else:  # legacy path
+            try:
+                completion = self.client.ChatCompletion.create(  # type: ignore[attr-defined]
+                    model=self.model if self.model.startswith("gpt-") else "gpt-4",
+                    messages=messages,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                )
+                return completion.choices[0].message.content  # type: ignore
+            except Exception as e:  # pragma: no cover
+                raise RuntimeError(f"Legacy OpenAI request failed: {e}") from e
+
+    def stream_chat(
+        self,
+        messages: List[Dict[str, str]],
+        temperature: float = 0.7,
+    ):
+        """Generator yielding streamed tokens (new SDK only).
+
+        Falls back to non-streaming if streaming unsupported.
+        """
+        if not _NEW_OPENAI_SDK or self.use_responses_api:
+            # Fallback: return single chunk
+            yield self._chat(messages, temperature=temperature)
+            return
+        try:
+            stream = self.client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+                temperature=temperature,
+                stream=True,
+            )
+            for event in stream:  # type: ignore
+                delta = getattr(event.choices[0].delta, "content", None)  # type: ignore
+                if delta:
+                    yield delta
+        except Exception as e:  # pragma: no cover
+            yield f"[Streaming failed: {e}]"

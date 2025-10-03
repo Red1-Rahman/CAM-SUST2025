@@ -13,16 +13,16 @@ astropy>=5.3.0
 h5py>=3.8.0
 
 # AI and machine learning
-openai>=0.27.0
+openai>=1.0.0  # Using new Responses/Chat API client
 
 # Specialized astronomical packages
 bagpipes>=1.0.0
-# jwst>=1.12.0  # Requires Visual C++ Build Tools on Windows
+# jwst>=1.12.0          # Heavy dependency; prefer conda install for production
 
 # Advanced cosmological simulation packages (optional - may require conda)
-# py21cmfast  # For 21cm simulations - complex installation, use conda
-# tools21cm   # Tools for 21cm analysis
-# nautilus-sampler  # Nested sampling algorithm
+# py21cmfast          # 21cm simulations (compile-heavy; recommend conda + Linux/WSL)
+# tools21cm           # Additional 21cm analysis utilities
+# nautilus-sampler     # Alternative nested sampler (used if PyMultiNest missing)
 
 # Development and testing
 pytest>=7.0.0

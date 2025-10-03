@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+.build/
+ dist/
+
+# Virtual environments
+.env
+.venv
+venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Streamlit secrets (do not commit real keys)
+.streamlit/secrets.toml
+
+# Local dotenv
+.env.local
+.env.*.local
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Cache
+.cache/
+.mypy_cache/
+.pytest_cache/
+
+# Reports / docs builds
+site/
+
+# Temporary
+*.tmp
+*.bak
+

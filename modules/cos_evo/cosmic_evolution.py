@@ -10,19 +10,21 @@ import matplotlib.pyplot as plt
 from scipy import fftpack
 from numpy import pi
 import warnings
+import logging
 warnings.filterwarnings("ignore")
+logger = logging.getLogger(__name__)
 
 try:
-    import py21cmfast as p21c
-    from py21cmfast import plotting
-    from py21cmfast import cache_tools
+    import py21cmfast as p21c  # type: ignore
+    from py21cmfast import plotting  # type: ignore
+    from py21cmfast import cache_tools  # type: ignore
     HAVE_21CMFAST = True
 except ImportError:
     HAVE_21CMFAST = False
-    print("Warning: py21cmfast not available. Using simulation mode.")
+    logger.warning("py21cmfast not available. Falling back to simulation mode.")
 
 try:
-    import tools21cm as t2c
+    import tools21cm as t2c  # type: ignore
     HAVE_TOOLS21CM = True
 except ImportError:
     HAVE_TOOLS21CM = False

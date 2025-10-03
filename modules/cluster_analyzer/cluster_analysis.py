@@ -13,14 +13,16 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 from scipy import stats
 import warnings
+import logging
 warnings.filterwarnings("ignore")
+logger = logging.getLogger(__name__)
 
 try:
     import bagpipes as pipes
     HAVE_BAGPIPES = True
 except ImportError:
     HAVE_BAGPIPES = False
-    print("Warning: bagpipes not available. Using simulation mode.")
+    logger.warning("bagpipes not available. Using simulation mode.")
 
 try:
     from astropy.io import fits
