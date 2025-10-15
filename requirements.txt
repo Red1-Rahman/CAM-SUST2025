@@ -1,29 +1,74 @@
-# Requirements for Astro-AI Galaxy Evolution Analysis Platform
+# Astro-AI Galaxy Evolution Analysis Platform
+# Optimized for Streamlit Community Cloud (Linux container deployment)
+# 
+# This file includes all dependencies required for the platform to run
+# in a Linux environment with fallback modes for heavy astronomical packages.
 
-# Core dependencies
+# ========================================
+# CORE STREAMLIT & WEB FRAMEWORK
+# ========================================
 streamlit>=1.28.0
+
+# ========================================
+# SCIENTIFIC COMPUTING CORE
+# ========================================
 numpy>=1.24.0
 pandas>=2.0.0
-matplotlib>=3.7.0
 scipy>=1.10.0
+
+# ========================================
+# VISUALIZATION & PLOTTING
+# ========================================
+matplotlib>=3.7.0
 seaborn>=0.12.0
+corner>=2.2.0  # For parameter distribution corner plots
 
-# Astronomical libraries
-astropy>=5.3.0
-h5py>=3.8.0
+# ========================================
+# ASTRONOMICAL LIBRARIES
+# ========================================
+astropy>=5.3.0  # Core astronomy calculations, coordinates, cosmology
+h5py>=3.8.0     # HDF5 file support for astronomical data
 
-# AI and machine learning
-openai>=1.0.0  # Using new Responses/Chat API client
+# ========================================
+# AI & MACHINE LEARNING
+# ========================================
+openai>=1.0.0   # OpenAI API client for AI-powered analysis
 
-# Specialized astronomical packages
-bagpipes>=1.0.0
-# jwst>=1.12.0          # Heavy dependency; prefer conda install for production
+# ========================================
+# SPECIALIZED ASTROPHYSICS PACKAGES
+# ========================================
+bagpipes>=1.0.0  # SED fitting and stellar population synthesis
 
-# Advanced cosmological simulation packages (optional - may require conda)
-# py21cmfast          # 21cm simulations (compile-heavy; recommend conda + Linux/WSL)
-# tools21cm           # Additional 21cm analysis utilities
-# nautilus-sampler     # Alternative nested sampler (used if PyMultiNest missing)
+# Optional heavy dependencies (will use fallback modes if unavailable)
+# Uncomment these for full scientific capability in specialized deployments:
 
-# Development and testing
+# 21cm COSMOLOGICAL SIMULATIONS
+# py21cmfast>=3.3.0     # Requires system libs: libfftw3-dev, libgsl-dev, gfortran
+# tools21cm>=2.0.0      # Additional 21cm analysis utilities
+
+# JWST SPACE TELESCOPE PIPELINE  
+# jwst>=1.12.0          # STScI pipeline - very heavy, requires CRDS data
+# stdatamodels>=1.8.0   # JWST data models
+
+# ADVANCED SAMPLERS
+# nautilus-sampler>=0.6.0  # Alternative nested sampler for Bayesian analysis
+
+# ========================================
+# DEVELOPMENT & TESTING (optional)
+# ========================================
 pytest>=7.0.0
 black>=23.0.0
+
+# ========================================
+# ADDITIONAL UTILITIES
+# ========================================
+# These are imported by standard library or already included as dependencies:
+# - warnings (stdlib)
+# - logging (stdlib) 
+# - os (stdlib)
+# - json (stdlib)
+# - pickle (stdlib)
+# - pathlib (stdlib)
+# - typing (stdlib)
+# - dataclasses (stdlib)
+# - importlib (stdlib)

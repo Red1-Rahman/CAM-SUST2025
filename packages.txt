@@ -1,0 +1,76 @@
+# packages.txt - System packages for Streamlit Community Cloud
+# 
+# This file specifies Linux system packages (apt-get) that need to be installed
+# before Python packages. Required for scientific packages that need compiled libraries.
+# 
+# Streamlit Cloud runs Ubuntu, so these are Ubuntu/Debian package names.
+
+# ========================================
+# BUILD TOOLS & COMPILERS
+# ========================================
+build-essential
+gfortran
+gcc
+g++
+cmake
+
+# ========================================
+# MATHEMATICAL & SCIENTIFIC LIBRARIES
+# ========================================
+# Fast Fourier Transform library (required by py21cmfast, scipy)
+libfftw3-dev
+libfftw3-3
+
+# GNU Scientific Library (required by py21cmfast)
+libgsl-dev
+libgsl27
+
+# Linear algebra libraries (BLAS/LAPACK for numpy/scipy optimization)
+libopenblas-dev
+liblapack-dev
+
+# ========================================
+# HDF5 SUPPORT
+# ========================================
+# HDF5 libraries for astronomical data files
+libhdf5-dev
+libhdf5-103
+
+# ========================================
+# GRAPHICS & VISUALIZATION SUPPORT
+# ========================================
+# For matplotlib and astronomical plotting
+libfreetype6-dev
+libpng-dev
+libjpeg-dev
+
+# ========================================
+# ADDITIONAL ASTRONOMY-SPECIFIC LIBRARIES
+# ========================================
+# CFITSIO for FITS file support (used by astropy, JWST pipeline)
+libcfitsio-dev
+
+# WCSLIB for World Coordinate System transformations
+libwcs-dev
+
+# ========================================
+# SYSTEM UTILITIES
+# ========================================
+# Version control and development tools
+git
+curl
+wget
+
+# ========================================
+# NOTES FOR DEPLOYMENT
+# ========================================
+# 
+# These packages enable:
+# 1. bagpipes - SED fitting (needs mathematical libraries)
+# 2. astropy - FITS files, WCS transformations
+# 3. py21cmfast - 21cm simulations (if enabled, needs FFTW, GSL, Fortran)
+# 4. jwst pipeline - Space telescope data reduction (needs HDF5, CFITSIO)
+# 5. matplotlib - High-quality scientific plotting
+# 
+# The platform will work without heavy packages (py21cmfast, jwst) using
+# fallback modes, but these system libraries ensure maximum compatibility.
