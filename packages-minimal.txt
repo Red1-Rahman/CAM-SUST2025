@@ -1,0 +1,35 @@
+# packages.txt - MINIMAL system packages for Streamlit Cloud
+# 
+# Minimal system dependencies for basic scientific computing
+# Heavy packages removed to prevent build timeouts
+
+# ========================================
+# ESSENTIAL ONLY
+# ========================================
+# Basic graphics support for matplotlib
+libfreetype6-dev
+libpng-dev
+
+# HDF5 for astronomical data (if h5py is used)
+libhdf5-dev
+
+# ========================================
+# REMOVED FOR MINIMAL DEPLOYMENT
+# ========================================
+# These can cause build timeouts or failures on Streamlit Cloud
+# Uncomment only if specific packages require them
+
+# Build tools (only if compilation needed)
+# build-essential
+# gcc
+# g++
+# gfortran
+# cmake
+
+# Scientific libraries (only for advanced packages)
+# libfftw3-dev
+# libgsl-dev
+# libopenblas-dev
+# liblapack-dev
+# libcfitsio-dev
+# libwcs-dev

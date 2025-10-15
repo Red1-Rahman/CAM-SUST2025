@@ -1,74 +1,64 @@
+
 # Astro-AI Galaxy Evolution Analysis Platform
-# Optimized for Streamlit Community Cloud (Linux container deployment)
+# STREAMLIT CLOUD DEPLOYMENT VERSION
 # 
-# This file includes all dependencies required for the platform to run
-# in a Linux environment with fallback modes for heavy astronomical packages.
+# This version is optimized for reliable deployment on Streamlit Community Cloud
+# Heavy scientific packages are commented out to prevent build failures
+# The app includes fallback modes when optional packages are unavailable
 
 # ========================================
 # CORE STREAMLIT & WEB FRAMEWORK
 # ========================================
-streamlit>=1.28.0
+streamlit==1.28.1
 
 # ========================================
 # SCIENTIFIC COMPUTING CORE
 # ========================================
-numpy>=1.24.0
-pandas>=2.0.0
-scipy>=1.10.0
+numpy==1.24.3
+pandas==2.0.3
+scipy==1.10.1
 
 # ========================================
 # VISUALIZATION & PLOTTING
 # ========================================
-matplotlib>=3.7.0
-seaborn>=0.12.0
-corner>=2.2.0  # For parameter distribution corner plots
+matplotlib==3.7.2
+seaborn==0.12.2
 
 # ========================================
 # ASTRONOMICAL LIBRARIES
 # ========================================
-astropy>=5.3.0  # Core astronomy calculations, coordinates, cosmology
-h5py>=3.8.0     # HDF5 file support for astronomical data
+astropy==5.3.4
+h5py==3.9.0
 
 # ========================================
 # AI & MACHINE LEARNING
 # ========================================
-openai>=1.0.0   # OpenAI API client for AI-powered analysis
+openai==1.3.5
 
 # ========================================
-# SPECIALIZED ASTROPHYSICS PACKAGES
+# OPTIONAL SCIENTIFIC PACKAGES
 # ========================================
-bagpipes>=1.0.0  # SED fitting and stellar population synthesis
+# Uncomment these ONLY if deployment succeeds with core packages
+# The app will work without these using fallback/mock modes
 
-# Optional heavy dependencies (will use fallback modes if unavailable)
-# Uncomment these for full scientific capability in specialized deployments:
-
-# 21cm COSMOLOGICAL SIMULATIONS
-# py21cmfast>=3.3.0     # Requires system libs: libfftw3-dev, libgsl-dev, gfortran
-# tools21cm>=2.0.0      # Additional 21cm analysis utilities
-
-# JWST SPACE TELESCOPE PIPELINE  
-# jwst>=1.12.0          # STScI pipeline - very heavy, requires CRDS data
-# stdatamodels>=1.8.0   # JWST data models
-
-# ADVANCED SAMPLERS
-# nautilus-sampler>=0.6.0  # Alternative nested sampler for Bayesian analysis
+# bagpipes==1.0.0         # SED fitting - may cause build failures
+# corner==2.2.1           # Corner plots - compilation dependencies
 
 # ========================================
-# DEVELOPMENT & TESTING (optional)
+# HEAVY PACKAGES - FOR ADVANCED DEPLOYMENTS ONLY
 # ========================================
-pytest>=7.0.0
-black>=23.0.0
+# These require system libraries and often fail on Streamlit Cloud
+# Use only in specialized deployment environments
+
+# py21cmfast>=3.3.0       # 21cm simulations - needs libfftw3-dev, libgsl-dev
+# jwst>=1.12.0            # JWST pipeline - very heavy, needs CRDS
+# tools21cm>=2.0.0        # Additional 21cm utilities
+# nautilus-sampler>=0.6.0 # Alternative nested sampler
 
 # ========================================
-# ADDITIONAL UTILITIES
+# DEPLOYMENT STRATEGY
 # ========================================
-# These are imported by standard library or already included as dependencies:
-# - warnings (stdlib)
-# - logging (stdlib) 
-# - os (stdlib)
-# - json (stdlib)
-# - pickle (stdlib)
-# - pathlib (stdlib)
-# - typing (stdlib)
-# - dataclasses (stdlib)
-# - importlib (stdlib)
+# 1. Deploy with this minimal requirements.txt first
+# 2. Verify app loads and core functionality works
+# 3. Gradually uncomment packages if needed
+# 4. Use packages.txt and setup.sh for system dependencies

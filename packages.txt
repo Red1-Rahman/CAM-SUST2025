@@ -1,24 +1,42 @@
 # packages.txt - System packages for Streamlit Community Cloud
+# MINIMAL VERSION - Prevents build timeouts
 # 
-# This file specifies Linux system packages (apt-get) that need to be installed
-# before Python packages. Required for scientific packages that need compiled libraries.
-# 
-# Streamlit Cloud runs Ubuntu, so these are Ubuntu/Debian package names.
+# Only essential packages for core functionality
+# Heavy build tools removed to ensure reliable deployment
 
 # ========================================
+# GRAPHICS & VISUALIZATION
+# ========================================
+libfreetype6-dev
+libpng-dev
+
+# ========================================
+# DATA FORMAT SUPPORT  
+# ========================================
+libhdf5-dev
+
+# ========================================
+# COMMENTED OUT - MAY CAUSE BUILD ISSUES
+# ========================================
+# Uncomment these only if specific packages require them
+# and basic deployment is working
+
 # BUILD TOOLS & COMPILERS
-# ========================================
-build-essential
-gfortran
-gcc
-g++
-cmake
+# build-essential
+# gfortran  
+# gcc
+# g++
+# cmake
 
-# ========================================
-# MATHEMATICAL & SCIENTIFIC LIBRARIES
-# ========================================
-# Fast Fourier Transform library (required by py21cmfast, scipy)
-libfftw3-dev
+# MATHEMATICAL LIBRARIES
+# libfftw3-dev
+# libgsl-dev
+# libopenblas-dev
+# liblapack-dev
+
+# ASTRONOMY-SPECIFIC
+# libcfitsio-dev
+# libwcs-dev
 libfftw3-3
 
 # GNU Scientific Library (required by py21cmfast)
