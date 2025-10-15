@@ -1,0 +1,79 @@
+# Streamlit Configuration for Astro-AI Platform
+# Optimized for Community Cloud deployment
+
+[global]
+# Development vs Production mode
+developmentMode = false
+
+# Show error details in production (useful for debugging)
+showErrorDetails = true
+
+# Data frame display settings for large astronomical datasets
+dataFrameSerialization = "legacy"
+
+[server]
+# Server configuration
+runOnSave = false
+allowRunOnSave = false
+
+# Increased file upload limit for astronomical data
+maxUploadSize = 200
+
+# Enable CORS for potential API integrations
+enableCORS = true
+
+# WebSocket settings for real-time updates
+enableWebsocketCompression = true
+
+[browser]
+# Automatic browser opening (disabled for Cloud deployment)
+gatherUsageStats = false
+
+[theme]
+# Professional astronomical theme
+primaryColor = "#1f77b4"        # Blue for scientific applications
+backgroundColor = "#ffffff"     # Clean white background  
+secondaryBackgroundColor = "#f0f2f6"  # Light gray for panels
+textColor = "#262730"           # Dark text for readability
+
+# Font optimized for scientific content
+font = "sans serif"
+
+[client]
+# Performance optimizations for scientific computing
+caching = true
+showErrorDetails = true
+
+[mapbox]
+# Disable Mapbox (not needed for astronomical applications)
+token = ""
+
+[deprecation]
+# Handle deprecation warnings gracefully
+showPyplotGlobalUse = false
+
+# ========================================
+# NOTES FOR DEPLOYMENT
+# ========================================
+#
+# This configuration optimizes Streamlit for:
+# 
+# 1. SCIENTIFIC DATA HANDLING
+#    - Large file uploads (200MB for FITS files)
+#    - Efficient data frame serialization
+#    - Memory-conscious caching
+#
+# 2. PRODUCTION RELIABILITY  
+#    - Disabled development features
+#    - Error reporting for debugging
+#    - Stable websocket connections
+#
+# 3. USER EXPERIENCE
+#    - Professional scientific theme
+#    - Fast page loads with compression
+#    - Clear typography for data visualization
+#
+# 4. CLOUD OPTIMIZATION
+#    - Disabled local browser features
+#    - CORS support for API integration
+#    - Usage analytics disabled for privacy
