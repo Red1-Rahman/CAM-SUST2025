@@ -79,6 +79,7 @@ def main():
     """, unsafe_allow_html=True)
     
     # Sidebar navigation
+    st.sidebar.image("Icons/AstroAI logo.jpg", width=200)
     st.sidebar.title("🚀 Navigation")
     st.sidebar.markdown("---")
 
@@ -964,6 +965,30 @@ def show_report():
                         file_name=f"astro_ai_report.{report_format.lower()}",
                         mime="application/pdf" if report_format == "PDF" else "text/html"
                     )
+    
+    # Team Credits Section
+    st.markdown("---")
+    st.markdown("### 👥 Development Team")
+    
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        try:
+            st.image("Icons/Team R3NS.jpg", width=180)
+        except Exception:
+            st.markdown("**🌌 Team R3NS**")
+    
+    with col2:
+        st.markdown("""
+        **Team R3NS** - CAM-SUST 2025
+        
+        **Team Members:**
+        1. 👨‍💻 **Redwan Rahman** - Project Lead, Backend & Frontend Development
+        2. 👩‍🔬 **Nishat Nabilah Ahmed** - Scientific Validation Lead
+        3. 👩‍💻 **Nafia Wahid Nirjhor** - Backend Development
+        4. 👨‍🔬 **Saidul Hossain Al Amin** - Scientific Validation & Documentation
+        5. 👨‍💻 **Ahnaf Rahman Nabil** - Quality Assurance
+        
+        """)
 
 if __name__ == "__main__":
     main()
