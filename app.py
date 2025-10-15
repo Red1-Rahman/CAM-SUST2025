@@ -1,5 +1,14 @@
 # Astro-AI: Galaxy Evolution Analysis Platform
 # 
+# Copyright (c) 2025 Redwan Rahman and CAM-SUST
+# Copernicus Astronomical Memorial of Shahjalal University of Science and Technology
+# 
+# All rights reserved. Licensed under the Astro-AI Proprietary License.
+# Unauthorized use, distribution, or modification is strictly prohibited.
+# See LICENSE file for full terms and conditions.
+# 
+# Contact: redwanrahman2002@outlook.com
+# 
 # Main application file integrating cosmic evolution simulations,
 # cluster environment analysis, and JWST spectrum processing.
 # 
