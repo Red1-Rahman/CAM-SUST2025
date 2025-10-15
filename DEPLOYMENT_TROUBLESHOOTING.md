@@ -1,5 +1,27 @@
 # 🚨 Streamlit Cloud Deployment Troubleshooting
 
+## 🔥 **CRITICAL FIX: packages.txt Error**
+
+**If you see errors like "Unable to locate package #" or "Unable to locate package GRAPHICS":**
+
+**❌ PROBLEM**: Your `packages.txt` file contains comments that apt-get is trying to install as packages.
+
+**✅ SOLUTION**: Use ONLY package names, NO comments in `packages.txt`.
+
+**Current Fixed Version:**
+```txt
+libfreetype6-dev
+libpng-dev
+libhdf5-dev
+```
+
+**Emergency Minimal Version** (if still failing):
+```txt
+libfreetype6-dev
+```
+
+---
+
 ## Common "Error installing requirements" Solutions
 
 ### 🎯 **Quick Fix - Use Minimal Requirements**
