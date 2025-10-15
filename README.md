@@ -25,7 +25,7 @@ Sylhet, Bangladesh
 
 ## 👥 Development Team
 
-**Team R3NS - CAM-SUST 2025**
+**Team R3NS**
 
 1. **Redwan Rahman** - Project Lead, Backend & Frontend Development
 2. **Nishat Nabilah Ahmed** - Scientific Validation Lead
