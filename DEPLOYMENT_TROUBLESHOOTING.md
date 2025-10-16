@@ -29,7 +29,6 @@ libhdf5-dev
 libfftw3-dev
 libgsl-dev
 libcfitsio-dev
-libwcs-dev
 libopenblas-dev
 liblapack-dev
 build-essential

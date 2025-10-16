@@ -22,9 +22,6 @@ libgsl-dev
 # CFITSIO for astronomical FITS files
 libcfitsio-dev
 
-# WCS library for coordinate systems
-libwcs-dev
-
 # OpenBLAS for optimized linear algebra
 libopenblas-dev
 liblapack-dev

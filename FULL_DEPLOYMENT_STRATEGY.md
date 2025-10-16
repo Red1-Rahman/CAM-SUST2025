@@ -85,7 +85,6 @@ tools21cm>=2.0.0
 ```txt
 # Add to packages.txt
 libcfitsio-dev
-libwcs-dev
 
 # Add to requirements.txt
 jwst>=1.12.0
@@ -100,7 +99,7 @@ jwst>=1.12.0
 | `21cmFAST` (git) | `libfftw3-dev`, `libgsl-dev`, `build-essential` | Latest 21cm simulations |
 | `tools21cm`      | Same as py21cmfast                              | 21cm analysis utilities |
 | `bagpipes`       | `build-essential`, `gfortran`                   | SED fitting             |
-| `jwst`           | `libcfitsio-dev`, `libwcs-dev`                  | JWST pipeline           |
+| `jwst`           | `libcfitsio-dev`                                | JWST pipeline           |
 | `corner`         | (minimal dependencies)                          | Corner plots            |
 
 ---
