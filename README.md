@@ -79,12 +79,23 @@ streamlit run app.py
 
 For Streamlit Community Cloud deployment, see [`DEPLOYMENT.md`](DEPLOYMENT.md) for comprehensive Linux container setup.
 
+**Streamlit Cloud Platform**: `linux-64` (Debian-based containers)
+
 ## 📋 System Requirements
+
+### Development Environment
 
 - **Python**: 3.10 or higher
 - **Operating System**: Linux (recommended), Windows (limited), macOS
 - **Memory**: 4GB RAM minimum, 8GB+ recommended
 - **Storage**: 2GB free space for dependencies
+
+### Production Environment (Streamlit Cloud)
+
+- **Platform**: `linux-64` (x86_64 architecture)
+- **Container OS**: Debian bookworm
+- **Python Environment**: Conda + pip managed
+- **System Packages**: apt-get installable libraries
 
 ## 🔧 Core Dependencies
 

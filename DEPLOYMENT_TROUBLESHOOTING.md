@@ -9,6 +9,7 @@
 **✅ SOLUTION**: Use ONLY package names, NO comments in `packages.txt`.
 
 **Current Fixed Version:**
+
 ```txt
 libfreetype6-dev
 libpng-dev
@@ -16,9 +17,47 @@ libhdf5-dev
 ```
 
 **Emergency Minimal Version** (if still failing):
+
 ```txt
 libfreetype6-dev
 ```
+
+## 🔥 **CRITICAL FIX: ModuleNotFoundError h5py**
+
+**If you see "ModuleNotFoundError: No module named 'h5py'" or similar import errors:**
+
+**❌ PROBLEM**: Streamlit Cloud is using `environment.yml` instead of optimized `requirements.txt`.
+
+**✅ SOLUTION**: Remove `environment.yml` file so Streamlit uses `requirements.txt`.
+
+**Warning Message in Logs:**
+```
+📦 WARN: More than one requirements file detected in the repository. 
+Available options: conda /mount/src/cam-sust2025/environment.yml, 
+uv /mount/src/cam-sust2025/requirements.txt. 
+Used: conda with /mount/src/cam-sust2025/environment.yml
+```
+
+**Fix**: Delete `environment.yml` and redeploy.
+
+---
+
+## 🖥️ **Platform Information**
+
+**Streamlit Community Cloud Environment:**
+
+- **Platform**: `linux-64` (x86_64 architecture)
+- **OS**: Debian bookworm (bookworm InRelease)
+- **Package Manager**: apt-get (system packages) + conda/pip (Python)
+- **Python**: Conda-managed environment with pip fallback
+- **Container**: Isolated Linux container per deployment
+
+**This means:**
+
+- ✅ All packages must be Linux-compatible
+- ✅ Use Debian/Ubuntu package names in `packages.txt`
+- ✅ Binary wheels available for most scientific packages
+- ✅ Cross-platform Python packages work (numpy, pandas, etc.)
 
 ---
 

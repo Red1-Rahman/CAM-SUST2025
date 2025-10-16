@@ -2,7 +2,15 @@
 
 This directory contains deployment configuration files optimized for **Streamlit Community Cloud** running in Linux containers.
 
-## 📋 Deployment Files Overview
+## �️ **Target Platform**
+
+- **Platform**: `linux-64` (64-bit Linux)
+- **OS**: Debian/Ubuntu-based container
+- **Architecture**: x86_64
+- **Package Manager**: apt-get (system) + conda/pip (Python)
+- **Python Environment**: Conda-managed with pip fallback
+
+## �📋 Deployment Files Overview
 
 ### `requirements.txt` - Python Dependencies
 
