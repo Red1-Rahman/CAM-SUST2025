@@ -77,7 +77,11 @@ streamlit run app.py
 
 ### Production Deployment
 
-For Streamlit Community Cloud deployment, see [`DEPLOYMENT.md`](DEPLOYMENT.md) for comprehensive Linux container setup.
+**Complete Scientific Stack**: Full astronomical analysis capabilities from deployment.
+
+For Streamlit Community Cloud deployment, see [`DEPLOYMENT.md`](DEPLOYMENT.md) for comprehensive scientific package setup.
+
+**Included**: 21cm simulations, SED fitting, JWST pipeline, AI analysis, advanced astronomical packages.
 
 **Streamlit Cloud Platform**: `linux-64` (Debian-based containers)
 

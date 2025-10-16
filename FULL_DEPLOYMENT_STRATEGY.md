@@ -1,13 +1,14 @@
-# 🚀 Full Scientific Package Deployment Strategy
+# 🚀 Production Scientific Deployment Strategy
 
-## 📋 **Current Status**
+## 📋 **Deployment Approach**
 
-✅ **Minimal Deployment**: App running with core packages  
-🎯 **Goal**: Enable `py21cmfast`, `tools21cm`, `bagpipes`, `jwst_pipeline`
+🎯 **Strategy**: Full scientific deployment only - no minimal fallback  
+🔬 **Complete Stack**: `py21cmfast`, `tools21cm`, `bagpipes`, `jwst_pipeline`, advanced astronomical packages  
+⚡ **Single Configuration**: Production-ready with all capabilities enabled
 
 ---
 
-## ⚡ **Quick Deployment (Recommended)**
+## 🚀 **Production Deployment (Current Active)**
 
 ### **Step 1: Replace Requirements File**
 
@@ -94,13 +95,13 @@ jwst>=1.12.0
 
 ## 🛠️ **System Requirements Breakdown**
 
-| Package          | System Dependencies                             | Purpose                 |
-| ---------------- | ----------------------------------------------- | ----------------------- |
+| Package            | System Dependencies                             | Purpose                 |
+| ------------------ | ----------------------------------------------- | ----------------------- |
 | `py21cmfast` 3.4.0 | `libfftw3-dev`, `libgsl-dev`, `build-essential` | Stable 21cm simulations |
-| `tools21cm`      | Same as py21cmfast                              | 21cm analysis utilities |
-| `bagpipes`       | `build-essential`, `gfortran`                   | SED fitting             |
-| `jwst`           | `libcfitsio-dev`                                | JWST pipeline           |
-| `corner`         | (minimal dependencies)                          | Corner plots            |
+| `tools21cm`        | Same as py21cmfast                              | 21cm analysis utilities |
+| `bagpipes`         | `build-essential`, `gfortran`                   | SED fitting             |
+| `jwst`             | `libcfitsio-dev`                                | JWST pipeline           |
+| `corner`           | (minimal dependencies)                          | Corner plots            |
 
 ---
 

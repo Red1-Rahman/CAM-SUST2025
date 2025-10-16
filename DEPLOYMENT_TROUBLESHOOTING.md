@@ -1,14 +1,15 @@
 # 🚨 Streamlit Cloud Deployment Troubleshooting
 
-## � **FULL SCIENTIFIC DEPLOYMENT IN PROGRESS**
+## 🚀 **PRODUCTION SCIENTIFIC DEPLOYMENT**
 
-**Status**: Deploying complete scientific stack with `21cmFAST` (git), `tools21cm`, `bagpipes`, `jwst_pipeline`
+**Status**: Deploying complete scientific stack with `21cmFAST`, `tools21cm`, `bagpipes`, `jwst_pipeline`
 
-**Expected Build Time**: 10-15 minutes (heavy packages)  
-**System Packages**: 15+ libraries including FFTW, GSL, CFITSIO  
-**Python Packages**: Full astronomical analysis capabilities
+**Deployment Strategy**: Full scientific stack only - no minimal fallback  
+**Expected Build Time**: 10-15 minutes (complete astronomical package suite)  
+**System Packages**: 15 essential libraries including FFTW, GSL, CFITSIO  
+**Python Packages**: Complete astronomical analysis capabilities with numpy 2.x compatibility
 
-**If this deployment fails**, see fallback strategies in `FULL_DEPLOYMENT_STRATEGY.md`
+**Production-ready configuration** - all features enabled from deployment
 
 ---
 
@@ -40,7 +41,7 @@ python3-dev
 libx11-dev
 ```
 
-**Emergency Minimal Version** (if still failing):
+**Emergency Reduced Version** (only if production deployment fails):
 
 ```txt
 libfreetype6-dev
@@ -155,7 +156,7 @@ corner==2.2.1
 | --------------- | ------------------------ | ------------------------------------------------ |
 | `bagpipes`      | Compilation errors       | Use specific version `bagpipes==1.0.0` or remove |
 | `corner`        | C++ compiler needed      | Remove for now, app has fallback                 |
-| `py21cmfast`    | System libraries missing | Keep commented - requires packages.txt           |
+| `21cmFAST`      | System libraries missing | Keep commented - requires packages.txt           |
 | `jwst`          | Very heavy (>1GB)        | Keep commented - timeout issues                  |
 | `openai>=1.0.0` | Version conflicts        | Use exact version `openai==1.3.5`                |
 
@@ -168,7 +169,7 @@ corner==2.2.1
 ```bash
 # Replace >= with == for specific versions
 streamlit==1.28.1
-numpy==1.24.3
+numpy>=2.0.0
 pandas==2.0.3
 ```
 
@@ -248,7 +249,7 @@ If nothing works, try this ultra-minimal `requirements.txt`:
 
 ```txt
 streamlit==1.28.1
-numpy==1.24.3
+numpy>=2.0.0
 pandas==2.0.3
 matplotlib==3.7.2
 ```
