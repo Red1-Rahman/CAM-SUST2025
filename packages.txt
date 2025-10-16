@@ -1,58 +1,16 @@
-# packages-full.txt - COMPLETE system packages for full scientific deployment
-# 
-# Required for: py21cmfast, tools21cm, bagpipes, jwst_pipeline
-# WARNING: This adds significant build time to Streamlit Cloud deployment
-
-# ========================================
-# ESSENTIAL GRAPHICS & DATA
-# ========================================
 libfreetype6-dev
 libpng-dev
 libhdf5-dev
-
-# ========================================
-# SCIENTIFIC COMPUTING LIBRARIES
-# ========================================
-# FFTW for fast Fourier transforms (py21cmfast requirement)
 libfftw3-dev
-
-# GSL for cosmological calculations
 libgsl-dev
-
-# CFITSIO for astronomical FITS files
 libcfitsio-dev
-
-# WCS library for coordinate systems
 libwcs-dev
-
-# OpenBLAS for optimized linear algebra
 libopenblas-dev
 liblapack-dev
-
-# ========================================
-# BUILD TOOLS & COMPILERS
-# ========================================
-# Essential for compiling scientific packages
 build-essential
 gcc
 g++
 gfortran
 cmake
-
-# ========================================
-# ADDITIONAL DEVELOPMENT HEADERS
-# ========================================
-# Python development headers
 python3-dev
-
-# X11 support (may be needed for some packages)
 libx11-dev
-
-# ========================================
-# DEPLOYMENT STRATEGY
-# ========================================
-# 1. First deploy with packages.txt (minimal)
-# 2. Once app works, rename this to packages.txt
-# 3. Replace requirements.txt with requirements-full.txt
-# 4. Redeploy (expect 10-15 minute build time)
-# 5. If deployment fails, revert to minimal versions

@@ -20,18 +20,33 @@
 
 **✅ SOLUTION**: Use ONLY package names, NO comments in `packages.txt`.
 
-**Current Fixed Version:**
+**Current Fixed Version (Full Scientific):**
 
 ```txt
 libfreetype6-dev
 libpng-dev
 libhdf5-dev
+libfftw3-dev
+libgsl-dev
+libcfitsio-dev
+libwcs-dev
+libopenblas-dev
+liblapack-dev
+build-essential
+gcc
+g++
+gfortran
+cmake
+python3-dev
+libx11-dev
 ```
 
 **Emergency Minimal Version** (if still failing):
 
 ```txt
 libfreetype6-dev
+libpng-dev
+libhdf5-dev
 ```
 
 ## 🔥 **CRITICAL FIX: ModuleNotFoundError h5py** ⚠️ **RECURRING ISSUE**
