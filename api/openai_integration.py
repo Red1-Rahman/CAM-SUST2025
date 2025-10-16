@@ -248,7 +248,11 @@ class OpenAIAssistant:
             )
             
         except Exception as e:
-            return f"AI analysis temporarily unavailable: {str(e)}"
+            error_message = str(e)
+            if "429" in error_message or "rate-limited" in error_message.lower():
+                return self._generate_fallback_insight(data_summary, analysis_type)
+            else:
+                return f"AI analysis temporarily unavailable. Using simulation mode."
     
     def generate_comparative_analysis(self, results_summary: Dict[str, Any]) -> str:
         """
@@ -784,7 +788,22 @@ This integrated approach opens new avenues for understanding galaxy evolution, w
             return content
             
         except Exception as e:
-            return f"Template analysis temporarily unavailable: {str(e)}"
+            error_message = str(e)
+            
+            # Handle specific rate limit errors
+            if "429" in error_message or "rate-limited" in error_message.lower():
+                st.warning("🚦 **Rate Limit Reached**: The free AI model is temporarily busy. Using simulation mode for now.")
+                return self._generate_fallback_template_analysis(template_name)
+            
+            # Handle other API errors gracefully
+            elif "error" in error_message.lower():
+                st.warning("⚠️ **AI Service Temporarily Unavailable**: Switching to simulation mode.")
+                return self._generate_fallback_template_analysis(template_name)
+            
+            # Generic fallback
+            else:
+                st.info("ℹ️ Using simulation mode for analysis.")
+                return self._generate_fallback_template_analysis(template_name)
 
     def _generate_fallback_template_analysis(self, template_name: str) -> str:
         """Generate simulated template analysis when OpenAI API is not available"""

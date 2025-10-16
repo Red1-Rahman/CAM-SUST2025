@@ -899,6 +899,12 @@ def show_report():
             
             **Step 3:** Restart the app to enable AI-powered analysis!
             
+            ### 🚦 **About Rate Limits**
+            
+            **Free Models:** Sometimes experience high demand and temporary rate limits
+            **With Your Own Key:** Get dedicated rate limits and priority access
+            **Alternative:** The app gracefully falls back to high-quality simulation mode
+            
             **Features you'll unlock:**
             - ✨ AI-powered scientific insights
             - 📊 Intelligent comparative analysis  
@@ -906,6 +912,17 @@ def show_report():
             - 🎯 Smart next-step suggestions
             
             **Model:** DeepSeek R1 (free, optimized for scientific reasoning)
+            """)
+    else:
+        # Show rate limit info if we're getting 429 errors
+        with st.expander("ℹ️ AI Service Info", expanded=False):
+            st.markdown("""
+            **Current Status:** ✅ AI Features Enabled
+            
+            **Note:** If you see rate limit messages, this is normal for free tiers during peak usage.
+            The app automatically switches to simulation mode when needed.
+            
+            **For Priority Access:** Add your own OpenRouter API key in Streamlit secrets.
             """)
             
             st.info("💡 **Tip:** OpenRouter offers free access to DeepSeek R1, which is excellent for scientific analysis!")
