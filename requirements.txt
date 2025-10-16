@@ -20,7 +20,7 @@ scipy>=1.10.0
 # ========================================
 # VISUALIZATION & PLOTTING
 # ========================================
-matplotlib>=3.7.0
+matplotlib>=3.7.0,<3.9.0
 seaborn>=0.12.0
 corner>=2.2.0
 
@@ -95,6 +95,7 @@ emcee>=3.0.0
 # - Using newer Streamlit (>=1.38.0) for better numpy 2.x support
 # - Allowing pip to resolve numpy version automatically
 # - Updated astropy to >=6.0.0 for synphot compatibility
+# - Limited matplotlib to <3.9.0 for 21cmFAST compatibility (register_cmap API)
 # - Using flexible version constraints (>=) to minimize pip backtracking
 # - dust-attenuation package not available on PyPI (commented out)
 # 
