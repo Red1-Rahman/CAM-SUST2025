@@ -19,6 +19,51 @@
 # - JWST pipeline processing (reduce_data_st.ipynb, optimal_1d_extraction.ipynb)
 # - Spectral fitting with NGSF (sf_class.py, SF_functions.py)
 
+# CRITICAL: Setup bagpipes environment BEFORE any imports that might use bagpipes
+import os
+import tempfile
+import sys
+
+# Comprehensive bagpipes environment setup
+try:
+    # Create writable directory for bagpipes data files in Streamlit Cloud
+    bagpipes_data_dir = os.path.join(tempfile.gettempdir(), 'bagpipes_data')
+    os.makedirs(bagpipes_data_dir, exist_ok=True)
+    
+    # Create all expected subdirectories
+    grids_dir = os.path.join(bagpipes_data_dir, 'grids')
+    filters_dir = os.path.join(bagpipes_data_dir, 'filters')
+    os.makedirs(grids_dir, exist_ok=True)
+    os.makedirs(filters_dir, exist_ok=True)
+    
+    # Set environment variables for bagpipes data location
+    os.environ['BAGPIPES_FILTERS'] = bagpipes_data_dir
+    os.environ['BAGPIPES_DATA'] = bagpipes_data_dir
+    
+    # Aggressive approach: Monkey patch bagpipes config module before import
+    import types
+    
+    # Create a custom config module to intercept bagpipes.config
+    mock_config = types.ModuleType('bagpipes.config')
+    mock_config.BAGPIPES_DIR = bagpipes_data_dir
+    mock_config.bagpipes_dir = bagpipes_data_dir
+    mock_config.filters_dir = filters_dir  
+    mock_config.grid_dir = grids_dir
+    
+    # Add commonly expected variables
+    mock_config.igm_redshifts = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+    mock_config.igm_wavelengths = [1000.0, 2000.0, 3000.0, 4000.0, 5000.0]
+    
+    # Insert into sys.modules to intercept imports
+    sys.modules['bagpipes.config'] = mock_config
+    
+    print(f"✅ Bagpipes environment configured: {bagpipes_data_dir}")
+    print(f"✅ Bagpipes grids directory: {grids_dir}")
+    print(f"✅ Bagpipes filters directory: {filters_dir}")
+    
+except Exception as e:
+    print(f"⚠️ Bagpipes setup warning: {e}")
+
 import streamlit as st
 import logging
 from utils.feature_flags import summarize_status, detect_capabilities, all_required_or_raise
@@ -27,19 +72,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
-
-# Setup bagpipes environment for Streamlit Cloud compatibility
-import os
-import tempfile
-try:
-    # Create writable directory for bagpipes data files
-    bagpipes_data_dir = os.path.join(tempfile.gettempdir(), 'bagpipes_data')
-    os.makedirs(bagpipes_data_dir, exist_ok=True)
-    os.environ['BAGPIPES_FILTERS'] = bagpipes_data_dir
-    os.environ['BAGPIPES_DATA'] = bagpipes_data_dir
-    print(f"✅ Bagpipes data directory configured: {bagpipes_data_dir}")
-except Exception as e:
-    print(f"⚠️ Bagpipes setup warning: {e}")
 
 # Import modules
 from modules.cos_evo.cosmic_evolution import CosmicEvolution

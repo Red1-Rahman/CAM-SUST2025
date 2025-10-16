@@ -26,11 +26,20 @@ except ImportError:
     logger.warning("astropy not available. Some functionality disabled.")
 
 try:
+    # Try to setup bagpipes environment before import
+    import os
+    import tempfile
+    if 'BAGPIPES_DATA' not in os.environ:
+        bagpipes_data_dir = os.path.join(tempfile.gettempdir(), 'bagpipes_data')
+        os.makedirs(bagpipes_data_dir, exist_ok=True)
+        os.environ['BAGPIPES_FILTERS'] = bagpipes_data_dir
+        os.environ['BAGPIPES_DATA'] = bagpipes_data_dir
+    
     import bagpipes as pipes
     HAVE_BAGPIPES = True
-except ImportError:
+except (ImportError, PermissionError, OSError) as e:
     HAVE_BAGPIPES = False
-    logger.warning("bagpipes not available. Using simulation mode.")
+    logger.warning(f"bagpipes not available: {e}. Using simulation mode.")
 
 try:
     from jwst.datamodels import ImageModel  # type: ignore
