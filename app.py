@@ -881,8 +881,34 @@ def show_dashboard():
 def show_report():
     st.header("📝 Report & Reflection")
     
-    # Initialize OpenAI assistant
-    ai_assistant = OpenAIAssistant()
+    # Initialize AI assistant with OpenRouter/DeepSeek by default
+    ai_assistant = OpenAIAssistant(provider="openrouter", model="deepseek/deepseek-r1:free")
+    
+    # Show AI setup guide if in fallback mode
+    if ai_assistant.fallback_mode:
+        with st.expander("🤖 Enable AI Features - Setup Guide", expanded=True):
+            st.markdown("""
+            ### 🆓 **Quick Setup: Free AI with OpenRouter**
+            
+            **Step 1:** Get a free API key at [OpenRouter.ai](https://openrouter.ai/)
+            
+            **Step 2:** In Streamlit Cloud, go to **Settings > Secrets** and add:
+            ```toml
+            OPENROUTER_API_KEY = "sk-or-v1-your-key-here"
+            ```
+            
+            **Step 3:** Restart the app to enable AI-powered analysis!
+            
+            **Features you'll unlock:**
+            - ✨ AI-powered scientific insights
+            - 📊 Intelligent comparative analysis  
+            - 📝 Automated report generation
+            - 🎯 Smart next-step suggestions
+            
+            **Model:** DeepSeek R1 (free, optimized for scientific reasoning)
+            """)
+            
+            st.info("💡 **Tip:** OpenRouter offers free access to DeepSeek R1, which is excellent for scientific analysis!")
     
     tab1, tab2, tab3 = st.tabs(["Analysis Report", "AI Insights", "Export Results"])
     

@@ -1,25 +1,29 @@
-"""OpenAI Integration for Astro-AI
+"""AI Integration for Astro-AI (OpenAI/OpenRouter Compatible)
 
-Modernized for openai>=1.0.0.
+Supports multiple AI providers:
+- OpenAI (gpt-4o, gpt-3.5-turbo)
+- OpenRouter (deepseek/deepseek-r1:free, anthropic/claude-3.5-sonnet, etc.)
 
-Key points:
-1. Uses the new `OpenAI` client (Responses API optional) while retaining a legacy fallback
-2. Removes hard-coded API key. Provide credentials via:
-   - Explicit constructor arg `api_key`
-   - Streamlit `st.secrets['OPENAI_API_KEY']`
-   - Environment variable `OPENAI_API_KEY`
-3. Unified private helper `_chat` abstracts differences between SDK versions
-4. Optional streaming via `stream_chat` when using the new SDK's chat.completions
-5. Toggle Responses API usage with `use_responses_api=True` (experimental for richer multimodal inputs)
+Key features:
+1. Uses the OpenAI-compatible client interface
+2. Flexible API key and base URL configuration
+3. Support for OpenRouter's free models like DeepSeek R1
+4. Graceful fallback to simulation mode when no API key is available
 
-Environment setup:
-    set OPENAI_API_KEY=sk-...   (Windows PowerShell)
+Configuration options:
+1. OpenAI: Set OPENAI_API_KEY
+2. OpenRouter: Set OPENROUTER_API_KEY and optionally OPENROUTER_MODEL
+
+Environment setup for OpenRouter:
+    set OPENROUTER_API_KEY=sk-or-v1-...   (Windows PowerShell)
+    set OPENROUTER_MODEL=deepseek/deepseek-r1:free   (Optional, defaults to deepseek-r1)
 
 Example:
-    assistant = OpenAIAssistant(model="gpt-4o")
-    insight = assistant.generate_insight({"stat":"value"}, analysis_type="cosmic_evolution")
-    for token in assistant.stream_chat([...]):
-        print(token, end="")
+    # OpenRouter with DeepSeek R1 (free)
+    assistant = OpenAIAssistant(provider="openrouter", model="deepseek/deepseek-r1:free")
+    
+    # OpenAI
+    assistant = OpenAIAssistant(provider="openai", model="gpt-4o")
 
 Security: ensure you NEVER commit real API keys to source control.
 """
@@ -42,52 +46,110 @@ class OpenAIAssistant:
     """
     AI-powered assistant for astronomical data analysis and scientific reporting.
     
+    Supports OpenAI and OpenRouter providers for flexible AI model access.
     Provides natural language insights, scientific interpretation, and 
     automated report generation for galaxy evolution studies.
     """
     
-    def __init__(self, api_key: Optional[str] = None, model: str = "gpt-4o", use_responses_api: bool = False):
+    def __init__(self, api_key: Optional[str] = None, model: Optional[str] = None, 
+                 provider: str = "auto", base_url: Optional[str] = None, use_responses_api: bool = False):
         """
-        Initialize OpenAI assistant with API key.
+        Initialize AI assistant with flexible provider support.
         
         Parameters:
         -----------
         api_key : str, optional
-            OpenAI API key. If not provided, will look for it in environment
-            or Streamlit secrets.
+            API key. If not provided, will auto-detect based on provider
+        model : str, optional
+            Model name. Defaults based on provider
+        provider : str
+            AI provider: "openai", "openrouter", or "auto"
+        base_url : str, optional
+            Custom base URL for API endpoints
         """
-        # API key sourcing hierarchy (no hard-coded secrets):
-        # 1. explicit parameter, 2. Streamlit secrets, 3. env var OPENAI_API_KEY
+        self.provider = provider
+        self.use_responses_api = use_responses_api
+        
+        # Auto-detect provider and configure defaults
+        self._configure_provider(api_key, model, base_url)
+
+    def _configure_provider(self, api_key: Optional[str], model: Optional[str], base_url: Optional[str]):
+        """Configure API provider settings"""
+        
+        # Auto-detect provider if not specified
+        if self.provider == "auto":
+            if 'OPENROUTER_API_KEY' in st.secrets or os.getenv('OPENROUTER_API_KEY'):
+                self.provider = "openrouter"
+            elif 'OPENAI_API_KEY' in st.secrets or os.getenv('OPENAI_API_KEY'):
+                self.provider = "openai"
+            else:
+                self.provider = "openrouter"  # Default to OpenRouter
+        
+        # Configure API key based on provider
         if api_key:
             self.api_key = api_key
-        elif 'OPENAI_API_KEY' in st.secrets:  # type: ignore[attr-defined]
-            self.api_key = st.secrets['OPENAI_API_KEY']  # type: ignore[index]
+        elif self.provider == "openrouter":
+            if 'OPENROUTER_API_KEY' in st.secrets:
+                self.api_key = st.secrets['OPENROUTER_API_KEY']
+            else:
+                self.api_key = os.getenv('OPENROUTER_API_KEY', '')
+        else:  # openai
+            if 'OPENAI_API_KEY' in st.secrets:
+                self.api_key = st.secrets['OPENAI_API_KEY']
+            else:
+                self.api_key = os.getenv('OPENAI_API_KEY', '')
+        
+        # Configure model based on provider
+        if model:
+            self.model = model
+        elif self.provider == "openrouter":
+            self.model = os.getenv('OPENROUTER_MODEL', 'deepseek/deepseek-r1:free')
+        else:  # openai
+            self.model = "gpt-4o"
+        
+        # Configure base URL
+        if base_url:
+            self.base_url = base_url
+        elif self.provider == "openrouter":
+            self.base_url = "https://openrouter.ai/api/v1"
         else:
-            self.api_key = os.getenv('OPENAI_API_KEY', '')
+            self.base_url = None  # Use OpenAI default
 
         # Set up fallback mode if no API key is available
         self.fallback_mode = False
         if not self.api_key:
             self.fallback_mode = True
-            st.warning("⚠️ OpenAI API key not configured. AI features will use simulation mode. Set OPENAI_API_KEY in Streamlit secrets to enable AI analysis.")
+            if self.provider == "openrouter":
+                st.warning("⚠️ OpenRouter API key not configured. AI features will use simulation mode. Set OPENROUTER_API_KEY in Streamlit secrets to enable AI analysis with DeepSeek R1.")
+            else:
+                st.warning("⚠️ OpenAI API key not configured. AI features will use simulation mode. Set OPENAI_API_KEY in Streamlit secrets to enable AI analysis.")
             self.client = None
             return
 
-        self.model = model
-        self.use_responses_api = use_responses_api
-
+        # Initialize the client
         try:
             if _NEW_OPENAI_SDK:
-                # Instantiate reusable client
-                self.client = OpenAI(api_key=self.api_key)
+                client_kwargs = {"api_key": self.api_key}
+                if self.base_url:
+                    client_kwargs["base_url"] = self.base_url
+                self.client = OpenAI(**client_kwargs)
             else:  # legacy fallback
                 import openai  # type: ignore
                 openai.api_key = self.api_key
+                if self.base_url:
+                    openai.api_base = self.base_url
                 self.client = openai  # type: ignore
         except Exception as e:
-            st.warning(f"⚠️ OpenAI client initialization failed: {e}. Using simulation mode.")
+            st.warning(f"⚠️ AI client initialization failed: {e}. Using simulation mode.")
             self.fallback_mode = True
             self.client = None
+            return
+        
+        # Success message
+        if self.provider == "openrouter":
+            st.success(f"✅ OpenRouter AI enabled with model: {self.model}")
+        else:
+            st.success(f"✅ OpenAI enabled with model: {self.model}")
         
         # System prompt for astronomical context
         self.system_prompt = """
