@@ -22,13 +22,22 @@ libhdf5-dev
 libfreetype6-dev
 ```
 
-## 🔥 **CRITICAL FIX: ModuleNotFoundError h5py**
+## 🔥 **CRITICAL FIX: ModuleNotFoundError h5py** ⚠️ **RECURRING ISSUE**
 
 **If you see "ModuleNotFoundError: No module named 'h5py'" or similar import errors:**
 
 **❌ PROBLEM**: Streamlit Cloud is using `environment.yml` instead of optimized `requirements.txt`.
 
+**⚠️ NOTE**: This issue can recur if `environment.yml` gets recreated. Always ensure it's completely removed.
+
 **✅ SOLUTION**: Remove `environment.yml` file so Streamlit uses `requirements.txt`.
+
+**Current Error Pattern:**
+```
+File "/mount/src/cam-sust2025/utils/data_handler.py", line 8, in <module>
+    import h5py
+ModuleNotFoundError: This app has encountered an error.
+```
 
 **Warning Message in Logs:**
 
@@ -50,6 +59,7 @@ Used: conda with /mount/src/cam-sust2025/environment.yml
 **✅ SOLUTION**: Update `.streamlit/config.toml` to remove deprecated options:
 
 **Remove these deprecated settings:**
+
 ```toml
 # REMOVE - No longer supported
 showErrorDetails = true
