@@ -18,11 +18,20 @@ warnings.filterwarnings("ignore")
 logger = logging.getLogger(__name__)
 
 try:
+    # Setup bagpipes environment before import
+    import os
+    import tempfile
+    bagpipes_data_dir = os.path.join(tempfile.gettempdir(), 'bagpipes_data')
+    os.makedirs(bagpipes_data_dir, exist_ok=True)
+    os.environ['BAGPIPES_FILTERS'] = bagpipes_data_dir
+    os.environ['BAGPIPES_DATA'] = bagpipes_data_dir
+    
     import bagpipes as pipes
     HAVE_BAGPIPES = True
-except ImportError:
+    logger.info("✅ Bagpipes loaded successfully with temp data directory")
+except (ImportError, PermissionError, OSError) as e:
     HAVE_BAGPIPES = False
-    logger.warning("bagpipes not available. Using simulation mode.")
+    logger.warning(f"⚠️ Bagpipes not available: {e}. Using simulation mode.")
 
 try:
     from astropy.io import fits

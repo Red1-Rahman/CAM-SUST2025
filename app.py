@@ -28,6 +28,19 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
 
+# Setup bagpipes environment for Streamlit Cloud compatibility
+import os
+import tempfile
+try:
+    # Create writable directory for bagpipes data files
+    bagpipes_data_dir = os.path.join(tempfile.gettempdir(), 'bagpipes_data')
+    os.makedirs(bagpipes_data_dir, exist_ok=True)
+    os.environ['BAGPIPES_FILTERS'] = bagpipes_data_dir
+    os.environ['BAGPIPES_DATA'] = bagpipes_data_dir
+    print(f"✅ Bagpipes data directory configured: {bagpipes_data_dir}")
+except Exception as e:
+    print(f"⚠️ Bagpipes setup warning: {e}")
+
 # Import modules
 from modules.cos_evo.cosmic_evolution import CosmicEvolution
 from modules.cluster_analyzer.cluster_analysis import ClusterAnalyzer
