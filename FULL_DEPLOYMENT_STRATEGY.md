@@ -76,7 +76,7 @@ libgsl-dev
 build-essential
 
 # Add to requirements.txt
-git+https://github.com/21cmfast/21cmFAST.git
+py21cmfast==3.4.0
 tools21cm>=2.0.0
 ```
 
@@ -96,7 +96,7 @@ jwst>=1.12.0
 
 | Package          | System Dependencies                             | Purpose                 |
 | ---------------- | ----------------------------------------------- | ----------------------- |
-| `21cmFAST` (git) | `libfftw3-dev`, `libgsl-dev`, `build-essential` | Latest 21cm simulations |
+| `py21cmfast` 3.4.0 | `libfftw3-dev`, `libgsl-dev`, `build-essential` | Stable 21cm simulations |
 | `tools21cm`      | Same as py21cmfast                              | 21cm analysis utilities |
 | `bagpipes`       | `build-essential`, `gfortran`                   | SED fitting             |
 | `jwst`           | `libcfitsio-dev`                                | JWST pipeline           |
