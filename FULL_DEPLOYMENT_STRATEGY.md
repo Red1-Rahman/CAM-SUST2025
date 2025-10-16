@@ -1,6 +1,7 @@
 # 🚀 Full Scientific Package Deployment Strategy
 
 ## 📋 **Current Status**
+
 ✅ **Minimal Deployment**: App running with core packages  
 🎯 **Goal**: Enable `py21cmfast`, `tools21cm`, `bagpipes`, `jwst_pipeline`
 
@@ -9,6 +10,7 @@
 ## ⚡ **Quick Deployment (Recommended)**
 
 ### **Step 1: Replace Requirements File**
+
 ```bash
 # Backup current minimal version
 cp requirements.txt requirements-minimal-backup.txt
@@ -18,6 +20,7 @@ cp requirements-full.txt requirements.txt
 ```
 
 ### **Step 2: Replace System Packages**
+
 ```bash
 # Backup current minimal packages
 cp packages.txt packages-minimal-backup.txt
@@ -27,6 +30,7 @@ cp packages-full.txt packages.txt
 ```
 
 ### **Step 3: Commit and Deploy**
+
 ```bash
 git add requirements.txt packages.txt
 git commit -m "🔬 Enable full scientific packages: py21cmfast, bagpipes, jwst, tools21cm"
@@ -36,6 +40,7 @@ git push
 ---
 
 ## ⏱️ **Expected Deployment Time**
+
 - **Minimal Version**: 2-3 minutes ✅ (Current)
 - **Full Version**: 10-15 minutes ⏳ (Target)
 
@@ -48,12 +53,14 @@ git push
 If full deployment fails, try adding packages gradually:
 
 ### **Phase 1: Add Corner Plots**
+
 ```txt
 # Add to requirements.txt
 corner==2.2.1
 ```
 
 ### **Phase 2: Add SED Fitting**
+
 ```txt
 # Add to requirements.txt
 bagpipes>=1.0.0
@@ -61,6 +68,7 @@ cython>=0.29.0
 ```
 
 ### **Phase 3: Add 21cm Cosmology**
+
 ```txt
 # Add to packages.txt
 libfftw3-dev
@@ -68,11 +76,12 @@ libgsl-dev
 build-essential
 
 # Add to requirements.txt
-py21cmfast>=3.3.0
+git+https://github.com/21cmfast/21cmFAST.git
 tools21cm>=2.0.0
 ```
 
 ### **Phase 4: Add JWST Pipeline**
+
 ```txt
 # Add to packages.txt
 libcfitsio-dev
@@ -86,13 +95,13 @@ jwst>=1.12.0
 
 ## 🛠️ **System Requirements Breakdown**
 
-| Package | System Dependencies | Purpose |
-|---------|-------------------|---------|
-| `py21cmfast` | `libfftw3-dev`, `libgsl-dev`, `build-essential` | 21cm simulations |
-| `tools21cm` | Same as py21cmfast | 21cm analysis utilities |
-| `bagpipes` | `build-essential`, `gfortran` | SED fitting |
-| `jwst` | `libcfitsio-dev`, `libwcs-dev` | JWST pipeline |
-| `corner` | (minimal dependencies) | Corner plots |
+| Package          | System Dependencies                             | Purpose                 |
+| ---------------- | ----------------------------------------------- | ----------------------- |
+| `21cmFAST` (git) | `libfftw3-dev`, `libgsl-dev`, `build-essential` | Latest 21cm simulations |
+| `tools21cm`      | Same as py21cmfast                              | 21cm analysis utilities |
+| `bagpipes`       | `build-essential`, `gfortran`                   | SED fitting             |
+| `jwst`           | `libcfitsio-dev`, `libwcs-dev`                  | JWST pipeline           |
+| `corner`         | (minimal dependencies)                          | Corner plots            |
 
 ---
 
@@ -101,6 +110,7 @@ jwst>=1.12.0
 If full deployment fails:
 
 1. **Revert to minimal**:
+
    ```bash
    cp requirements-minimal-backup.txt requirements.txt
    cp packages-minimal-backup.txt packages.txt
@@ -114,13 +124,13 @@ If full deployment fails:
 
 ## 📊 **Feature Status After Full Deployment**
 
-| Module | Minimal Version | Full Version |
-|--------|----------------|--------------|
-| Cosmic Evolution | Mock/Demo data | Full py21cmfast simulations |
-| Cluster Analyzer | Basic analysis | Advanced environmental modeling |
-| JWST Pipeline | Fallback mode | Real JWST data processing |
-| SED Fitting | Simple models | Full Bagpipes fitting |
-| AI Insights | ✅ Available | ✅ Enhanced with real data |
+| Module           | Minimal Version | Full Version                    |
+| ---------------- | --------------- | ------------------------------- |
+| Cosmic Evolution | Mock/Demo data  | Full py21cmfast simulations     |
+| Cluster Analyzer | Basic analysis  | Advanced environmental modeling |
+| JWST Pipeline    | Fallback mode   | Real JWST data processing       |
+| SED Fitting      | Simple models   | Full Bagpipes fitting           |
+| AI Insights      | ✅ Available    | ✅ Enhanced with real data      |
 
 ---
 

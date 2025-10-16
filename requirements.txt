@@ -38,8 +38,8 @@ openai==1.3.5
 # ========================================
 # HEAVY SCIENTIFIC PACKAGES
 # ========================================
-# 21cm Cosmology
-py21cmfast>=3.3.0
+# 21cm Cosmology - using latest GitHub version for cutting-edge features
+git+https://github.com/21cmfast/21cmFAST.git
 tools21cm>=2.0.0
 
 # SED Fitting & Galaxy Analysis

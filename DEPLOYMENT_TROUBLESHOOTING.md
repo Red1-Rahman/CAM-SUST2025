@@ -2,11 +2,11 @@
 
 ## � **FULL SCIENTIFIC DEPLOYMENT IN PROGRESS**
 
-**Status**: Deploying complete scientific stack with `py21cmfast`, `tools21cm`, `bagpipes`, `jwst_pipeline`
+**Status**: Deploying complete scientific stack with `21cmFAST` (git), `tools21cm`, `bagpipes`, `jwst_pipeline`
 
 **Expected Build Time**: 10-15 minutes (heavy packages)  
 **System Packages**: 15+ libraries including FFTW, GSL, CFITSIO  
-**Python Packages**: Full astronomical analysis capabilities  
+**Python Packages**: Full astronomical analysis capabilities
 
 **If this deployment fails**, see fallback strategies in `FULL_DEPLOYMENT_STRATEGY.md`
 
