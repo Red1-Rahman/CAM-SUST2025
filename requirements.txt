@@ -51,6 +51,20 @@ jwst>=1.12.0
 # Advanced Sampling
 nautilus-sampler>=0.6.0
 
+# Additional Astronomical Packages
+git+https://github.com/karllark/dust_attenuation.git
+photutils>=1.12.0
+regions>=0.9
+gwcs>=0.21.0
+asdf>=3.2.0
+synphot>=1.4.0
+
+# Supernova Analysis (Optional)
+# bayesn
+# snpy  
+# astrodash
+# snid-sage
+
 # ========================================
 # SUPPORTING PACKAGES
 # ========================================
