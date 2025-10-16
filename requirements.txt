@@ -14,26 +14,26 @@ streamlit>=1.38.0
 # SCIENTIFIC COMPUTING CORE
 # ========================================
 numpy>=1.24.0
-pandas==2.0.3
-scipy==1.10.1
+pandas>=2.0.0
+scipy>=1.10.0
 
 # ========================================
 # VISUALIZATION & PLOTTING
 # ========================================
-matplotlib==3.7.2
-seaborn==0.12.2
-corner==2.2.1
+matplotlib>=3.7.0
+seaborn>=0.12.0
+corner>=2.2.0
 
 # ========================================
 # ASTRONOMICAL LIBRARIES
 # ========================================
-astropy==5.3.4
-h5py==3.9.0
+astropy>=6.0.0
+h5py>=3.9.0
 
 # ========================================
 # AI & MACHINE LEARNING
 # ========================================
-openai==1.3.5
+openai>=1.3.0
 
 # ========================================
 # HEAVY SCIENTIFIC PACKAGES  
@@ -94,6 +94,8 @@ emcee>=3.0.0
 # COMPATIBILITY STRATEGY:
 # - Using newer Streamlit (>=1.38.0) for better numpy 2.x support
 # - Allowing pip to resolve numpy version automatically
+# - Updated astropy to >=6.0.0 for synphot compatibility
+# - Using flexible version constraints (>=) to minimize pip backtracking
 # - dust-attenuation package not available on PyPI (commented out)
 # 
 # OFFICIAL 21cmFAST: conda install -c conda-forge 21cmFAST
