@@ -713,3 +713,258 @@ This integrated approach opens new avenues for understanding galaxy evolution, w
         }
         
         return sections.get(section_type, sections["introduction"])
+
+    def generate_template_analysis(self, template_name: str, session_state: Any) -> str:
+        """
+        Generate analysis based on predefined templates.
+        
+        Parameters:
+        -----------
+        template_name : str
+            Name of the analysis template
+        session_state : Any
+            Streamlit session state containing analysis results
+        
+        Returns:
+        --------
+        str
+            Generated template analysis
+        """
+        # Fallback mode when no API key is available
+        if self.fallback_mode:
+            return self._generate_fallback_template_analysis(template_name)
+        
+        try:
+            # Create template-specific prompts
+            template_prompts = {
+                "Cosmic evolution timeline analysis": f"""
+                Analyze the cosmic evolution timeline from our 21cm simulations.
+                Focus on key epochs: reionization, first galaxies, structure formation.
+                Provide a chronological narrative of early universe evolution.
+                
+                Session data summary: {str(session_state.__dict__ if hasattr(session_state, '__dict__') else 'No data available')}
+                """,
+                
+                "Galaxy cluster environmental study": f"""
+                Examine environmental effects on galaxy evolution in cluster settings.
+                Compare central vs satellite galaxies, discuss quenching mechanisms.
+                Analyze color-magnitude relations and stellar population gradients.
+                
+                Session data summary: {str(session_state.__dict__ if hasattr(session_state, '__dict__') else 'No data available')}
+                """,
+                
+                "JWST spectroscopic deep dive": f"""
+                Perform detailed analysis of JWST spectroscopic observations.
+                Focus on emission lines, stellar populations, chemical evolution.
+                Discuss implications for galaxy formation and evolution models.
+                
+                Session data summary: {str(session_state.__dict__ if hasattr(session_state, '__dict__') else 'No data available')}
+                """,
+                
+                "High-redshift galaxy formation insights": f"""
+                Analyze high-redshift galaxy formation and early universe physics.
+                Connect 21cm signatures with galaxy observations.
+                Discuss implications for Lambda-CDM cosmology and galaxy formation models.
+                
+                Session data summary: {str(session_state.__dict__ if hasattr(session_state, '__dict__') else 'No data available')}
+                """
+            }
+            
+            prompt = template_prompts.get(template_name, f"Analyze the astronomical data for: {template_name}")
+            
+            content = self._chat(
+                messages=[
+                    {"role": "system", "content": self.system_prompt},
+                    {"role": "user", "content": prompt},
+                ],
+                max_tokens=1500,
+                temperature=0.7,
+            )
+            
+            return content
+            
+        except Exception as e:
+            return f"Template analysis temporarily unavailable: {str(e)}"
+
+    def _generate_fallback_template_analysis(self, template_name: str) -> str:
+        """Generate simulated template analysis when OpenAI API is not available"""
+        
+        templates = {
+            "Cosmic evolution timeline analysis": """
+# Cosmic Evolution Timeline Analysis (AI Simulation Mode)
+
+## 🌌 **Early Universe Timeline**
+
+**z > 20 (First 200 Myr):** 
+- Dark matter structure formation begins
+- First dark matter halos collapse
+- Primordial gas cooling in minihalos
+
+**z = 15-20 (200-400 Myr):**
+- First Population III stars form
+- Initial heavy element production
+- First supernovae and feedback
+
+**z = 10-15 (400-600 Myr):**
+- Transition to Population II star formation  
+- First galaxies with ongoing star formation
+- Beginning of cosmic reionization
+
+**z = 6-10 (600 Myr - 1 Gyr):**
+- Peak of reionization epoch
+- 21cm power spectrum evolution
+- Lyman-α forest signatures
+
+**z < 6 (> 1 Gyr):**
+- Universe becomes fully ionized
+- Modern galaxy formation continues
+- Observable galaxy populations
+
+## 🔬 **Key Physical Processes**
+
+- **Gravitational collapse** drives structure formation
+- **Stellar feedback** regulates star formation
+- **Radiative feedback** affects gas cooling
+- **Chemical enrichment** builds galaxy masses
+
+*Note: This is a simulation. Enable OpenRouter AI for detailed timeline analysis.*
+            """,
+            
+            "Galaxy cluster environmental study": """
+# Galaxy Cluster Environmental Study (AI Simulation Mode)
+
+## 🌌 **Environmental Effects Overview**
+
+**Central Galaxies:**
+- Massive, early-type morphologies
+- Quenched star formation
+- High stellar masses and metallicities
+- Clear red sequence positioning
+
+**Satellite Galaxies:**
+- Ram-pressure stripping effects
+- Truncated star formation histories
+- Stellar mass function variations
+- Distance-dependent properties
+
+## 📊 **Observational Signatures**
+
+**Color-Magnitude Relations:**
+- Tight red sequence in cluster cores
+- Blue cloud depletion at high masses
+- Environmental dependence of scatter
+- Morphology-density correlations
+
+**Stellar Population Gradients:**
+- Age gradients from center to outskirts
+- Metallicity variations with environment
+- Star formation quenching timescales
+- Chemical evolution differences
+
+## 🔍 **Physical Mechanisms**
+
+- **Ram-pressure stripping** removes gas
+- **Tidal interactions** truncate disks
+- **Mergers** drive morphological evolution
+- **Strangulation** cuts off gas supply
+
+*Note: This is a simulation. Enable OpenRouter AI for comprehensive environmental analysis.*
+            """,
+            
+            "JWST spectroscopic deep dive": """
+# JWST Spectroscopic Deep Dive (AI Simulation Mode)
+
+## 🔭 **Spectroscopic Capabilities**
+
+**Emission Line Analysis:**
+- Hα, [OIII], [OII] flux measurements
+- Star formation rate diagnostics
+- Metallicity indicators (R23, N2)
+- Ionization parameter constraints
+
+**Continuum Analysis:**
+- Stellar population synthesis
+- Age and metallicity estimates
+- Dust attenuation measurements
+- Stellar mass determinations
+
+## 📈 **Physical Properties Derived**
+
+**Star Formation:**
+- SFR from emission line luminosities
+- Specific star formation rates
+- Star formation efficiency
+- Recent vs. extended histories
+
+**Chemical Evolution:**
+- Gas-phase metallicity gradients
+- Stellar abundance patterns
+- Chemical enrichment timescales
+- Mass-metallicity relations
+
+**Stellar Populations:**
+- Age dating from absorption features
+- Multiple population components
+- Formation epoch constraints
+- Assembly history reconstruction
+
+## 🌠 **Scientific Implications**
+
+- **Galaxy formation models** validation
+- **Chemical evolution** pathway constraints  
+- **Environmental effects** quantification
+- **High-redshift** population properties
+
+*Note: This is a simulation. Enable OpenRouter AI for detailed spectroscopic analysis.*
+            """,
+            
+            "High-redshift galaxy formation insights": """
+# High-Redshift Galaxy Formation Insights (AI Simulation Mode)
+
+## 🌌 **Early Galaxy Formation**
+
+**Theoretical Framework:**
+- Lambda-CDM structure formation
+- Gas cooling and star formation thresholds
+- Feedback mechanisms and regulation
+- Chemical enrichment processes
+
+**Observational Constraints:**
+- JWST galaxy surveys at z > 10
+- 21cm power spectrum measurements
+- Lyman-α emitter populations
+- Galaxy luminosity functions
+
+## 🔬 **Key Physical Processes**
+
+**Star Formation Regulation:**
+- Stellar feedback and outflows
+- Supernova energy injection
+- Radiative feedback from massive stars
+- Black hole formation and growth
+
+**Chemical Evolution:**
+- Population III to Population II transition
+- Metal enrichment timescales
+- Dust formation and evolution
+- ISM chemical complexity
+
+## 📊 **Cosmological Implications**
+
+**Structure Formation:**
+- Dark matter halo mass functions
+- Baryon fraction evolution
+- Galaxy-halo connection
+- Clustering and bias measurements
+
+**Reionization Physics:**
+- Ionizing photon production
+- Escape fraction evolution
+- IGM temperature evolution
+- 21cm signal interpretation
+
+*Note: This is a simulation. Enable OpenRouter AI for comprehensive formation insights.*
+            """
+        }
+        
+        return templates.get(template_name, f"**{template_name}** analysis would be generated here with AI integration enabled.")
