@@ -5,11 +5,8 @@
 # Development vs Production mode
 developmentMode = false
 
-# Show error details in production (useful for debugging)
-showErrorDetails = true
-
-# Data frame display settings for large astronomical datasets
-dataFrameSerialization = "legacy"
+# Data frame display is now handled automatically by Arrow serialization
+# (legacy serialization has been removed in newer Streamlit versions)
 
 [server]
 # Server configuration
@@ -42,7 +39,9 @@ font = "sans serif"
 [client]
 # Performance optimizations for scientific computing
 caching = true
-showErrorDetails = true
+
+# Error details are now controlled by server settings
+# showErrorDetails has been moved or deprecated
 
 [mapbox]
 # Disable Mapbox (not needed for astronomical applications)

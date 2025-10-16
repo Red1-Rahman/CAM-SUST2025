@@ -31,14 +31,32 @@ libfreetype6-dev
 **✅ SOLUTION**: Remove `environment.yml` file so Streamlit uses `requirements.txt`.
 
 **Warning Message in Logs:**
+
 ```
-📦 WARN: More than one requirements file detected in the repository. 
-Available options: conda /mount/src/cam-sust2025/environment.yml, 
-uv /mount/src/cam-sust2025/requirements.txt. 
+📦 WARN: More than one requirements file detected in the repository.
+Available options: conda /mount/src/cam-sust2025/environment.yml,
+uv /mount/src/cam-sust2025/requirements.txt.
 Used: conda with /mount/src/cam-sust2025/environment.yml
 ```
 
 **Fix**: Delete `environment.yml` and redeploy.
+
+## 🔥 **CRITICAL FIX: Streamlit Configuration Deprecation**
+
+**If you see "global.dataFrameSerialization IS NO LONGER SUPPORTED" or similar config errors:**
+
+**❌ PROBLEM**: `.streamlit/config.toml` contains deprecated configuration options.
+
+**✅ SOLUTION**: Update `.streamlit/config.toml` to remove deprecated options:
+
+**Remove these deprecated settings:**
+```toml
+# REMOVE - No longer supported
+showErrorDetails = true
+dataFrameSerialization = "legacy"
+```
+
+**Modern Arrow serialization is automatic in Streamlit 1.28+**
 
 ---
 
