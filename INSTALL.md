@@ -45,7 +45,7 @@ pip install tools21cm
 pip install nautilus-sampler
 
 # Optional: Install 21cmFAST (Linux/WSL only)
-# pip install git+https://github.com/21cmfast/21cmFAST.git
+pip install git+https://github.com/21cmfast/21cmFAST.git
 
 # Optional: Install JWST pipeline (requires C++ compiler)
 # conda install -c conda-forge jwst

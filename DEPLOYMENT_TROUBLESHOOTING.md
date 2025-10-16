@@ -1,6 +1,18 @@
 # 🚨 Streamlit Cloud Deployment Troubleshooting
 
-## 🔥 **CRITICAL FIX: packages.txt Error**
+## � **FULL SCIENTIFIC DEPLOYMENT IN PROGRESS**
+
+**Status**: Deploying complete scientific stack with `py21cmfast`, `tools21cm`, `bagpipes`, `jwst_pipeline`
+
+**Expected Build Time**: 10-15 minutes (heavy packages)  
+**System Packages**: 15+ libraries including FFTW, GSL, CFITSIO  
+**Python Packages**: Full astronomical analysis capabilities  
+
+**If this deployment fails**, see fallback strategies in `FULL_DEPLOYMENT_STRATEGY.md`
+
+---
+
+## �🔥 **CRITICAL FIX: packages.txt Error**
 
 **If you see errors like "Unable to locate package #" or "Unable to locate package GRAPHICS":**
 
@@ -33,6 +45,7 @@ libfreetype6-dev
 **✅ SOLUTION**: Remove `environment.yml` file so Streamlit uses `requirements.txt`.
 
 **Current Error Pattern:**
+
 ```
 File "/mount/src/cam-sust2025/utils/data_handler.py", line 8, in <module>
     import h5py
